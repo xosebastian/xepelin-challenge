@@ -1,0 +1,18 @@
+{
+  "name": "xepellin-challenge",
+  "version": "0.0.1",
+  "description": "xepellin-challenge",
+  "scripts": {
+    "services:init": "bash stack/init-services.sh",
+    "services:start": "docker-compose -f stack/docker-compose.yml -p xepellin-challenge-stack up -d",
+    "services:stop": "docker-compose -f stack/docker-compose.yml -p xepellin-challenge-stack stop"
+  },
+  "keywords": [
+    "xepellin",
+    "challenge",
+    "api"
+  ],
+  "author": "xosebastian",
+  "license": "GNU",
+  "homepage": "https://github.com/xosebastian/xepelin-challenge#readme"
+}
