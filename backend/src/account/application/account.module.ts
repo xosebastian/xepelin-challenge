@@ -8,9 +8,9 @@ import { AccountRepositoryImplement } from '@account/infrastructure/repositories
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from '@account/domain/entities';
 
-const CommandHandlers = [CreateAccountHandler];
-const Application = [CreateAccountUseCase];
-const Infrastructure = [
+const commandHandlers = [CreateAccountHandler];
+const application = [CreateAccountUseCase];
+const infrastructure = [
   {
     provide: ACCOUNT_REPOSITORY,
     useClass: AccountRepositoryImplement,
@@ -20,6 +20,6 @@ const Infrastructure = [
 @Module({
   imports: [CqrsModule, TypeOrmModule.forFeature([Account])],
   controllers: [AccountController],
-  providers: [...Infrastructure, ...CommandHandlers, ...Application],
+  providers: [...infrastructure, ...commandHandlers, ...application],
 })
 export class AccountModule {}

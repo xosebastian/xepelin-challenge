@@ -11,10 +11,6 @@ export class CreateAccountHandler
   async execute(command: CreateAccountCommand) {
     const { name, accountNumber } = command;
 
-    console.log('CreateAccountHandler.execute()');
-
-    console.log('name: ', name);
-
     const accountId = await this.createAccountUseCase.execute(
       name,
       accountNumber,

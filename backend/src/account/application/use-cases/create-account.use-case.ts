@@ -13,8 +13,6 @@ export class CreateAccountUseCase {
     name: string,
     accountNumber: string,
   ): Promise<Pick<Account, 'id'>> {
-    console.log('CreateAccountUseCase.execute()');
-
     const account = new Account();
     account.name = name;
     account.accountNumber = accountNumber;
