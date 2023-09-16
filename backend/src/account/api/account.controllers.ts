@@ -1,6 +1,9 @@
 //Create controller
 
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreateAccountDto } from '../application/dtos';
+import { CreateAccountCommand } from '../commands/implement';
 
 // Path: backend/src/account/api/account.controllers.ts
 
@@ -8,10 +11,15 @@ import { Controller, Post } from '@nestjs/common';
 
 @Controller({ path: 'accounts' })
 export class AccountController {
-  constructor() {}
+  constructor(private readonly commandBus: CommandBus) {}
 
-  @Post('')
-  async createAccount() {
-    return;
+  @Post()
+  async createAccount(@Body() payload: CreateAccountDto) {
+    const command = new CreateAccountCommand(
+      payload.name,
+      payload.accountNumber,
+    );
+
+    return this.commandBus.execute(command);
   }
 }
