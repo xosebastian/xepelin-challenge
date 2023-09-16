@@ -12,7 +12,13 @@ export class Account {
   @Column({ type: 'varchar', length: 100, nullable: false })
   accountNumber: string;
 
-  @Column({ type: 'numeric', precision: 10, scale: 2, nullable: false })
+  @Column({
+    type: 'numeric',
+    precision: 10,
+    scale: 2,
+    nullable: false,
+    default: 0,
+  })
   balance: number;
 
   deposit(amount: number): void {

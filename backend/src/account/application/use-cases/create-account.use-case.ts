@@ -1,15 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Account } from '../../domain/entities';
-import { AccountRepository } from '../../domain/repositories';
+import { AccountRepository } from '@account/domain/repositories';
+import { ACCOUNT_REPOSITORY } from '../injection-tokens';
 
 @Injectable()
 export class CreateAccountUseCase {
-  constructor(private readonly accountRepository: AccountRepository) {}
+  constructor(
+    @Inject(ACCOUNT_REPOSITORY) private accountRepository: AccountRepository,
+  ) {}
 
   async execute(
     name: string,
     accountNumber: string,
   ): Promise<Pick<Account, 'id'>> {
+    console.log('CreateAccountUseCase.execute()');
+
     const account = new Account();
     account.name = name;
     account.accountNumber = accountNumber;

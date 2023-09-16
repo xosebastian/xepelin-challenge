@@ -9,6 +9,17 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
+    "paths": {
+      "@core/*": [
+        "./src/core/*"
+      ],
+      "@account/*": [
+        "./src/account/*"
+      ],
+      "@transaction/*": [
+        "./src/transaction/*"
+      ],
+    },
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
