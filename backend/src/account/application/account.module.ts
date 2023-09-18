@@ -7,8 +7,10 @@ import { ACCOUNT_REPOSITORY } from './injection-tokens';
 import { AccountRepositoryImplement } from '@account/infrastructure/repositories';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from '@account/domain/entities';
+import { CreatedAccountHandler } from '@account/interfaces/listeners';
 
 const commandHandlers = [CreateAccountHandler];
+const eventHandlers = [CreatedAccountHandler];
 const application = [CreateAccountUseCase];
 const infrastructure = [
   {
@@ -20,6 +22,11 @@ const infrastructure = [
 @Module({
   imports: [CqrsModule, TypeOrmModule.forFeature([Account])],
   controllers: [AccountController],
-  providers: [...infrastructure, ...commandHandlers, ...application],
+  providers: [
+    ...infrastructure,
+    ...commandHandlers,
+    ...application,
+    ...eventHandlers,
+  ],
 })
 export class AccountModule {}

@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApplicationModule);
+  const app = await NestFactory.create(ApplicationModule, { cors: true });
+  const port = process.env.PORT || 4000;
+  const host = process.env.HOST || 'localhost';
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -12,6 +14,8 @@ async function bootstrap() {
     }),
   );
 
-  app.listen(4000, () => console.log('Application is listening on port 3000.'));
+  app.listen(port, () => {
+    Logger.log(`Listening at http://${host}:${port}`);
+  });
 }
 bootstrap();

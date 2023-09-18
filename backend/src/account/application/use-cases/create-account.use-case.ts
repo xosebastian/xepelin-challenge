@@ -10,15 +10,15 @@ export class CreateAccountUseCase {
   ) {}
 
   async execute(
+    accountId: string,
     name: string,
     accountNumber: string,
-  ): Promise<Pick<Account, 'id'>> {
+  ): Promise<void> {
     const account = new Account();
+    account.id = accountId;
     account.name = name;
     account.accountNumber = accountNumber;
 
     await this.accountRepository.save(account);
-
-    return { id: account.id };
   }
 }
