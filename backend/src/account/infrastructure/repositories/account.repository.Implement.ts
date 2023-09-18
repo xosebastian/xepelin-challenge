@@ -24,4 +24,8 @@ export class AccountRepositoryImplement implements AccountRepository {
   async remove(id: string): Promise<void> {
     await this.repository.delete(id);
   }
+  async findByAccountNumber(accountNumber: string): Promise<Account | null> {
+    const account = await this.repository.findOneBy({ accountNumber });
+    return account ?? null;
+  }
 }

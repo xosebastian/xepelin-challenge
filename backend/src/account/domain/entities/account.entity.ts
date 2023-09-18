@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { InsufficientFundsException } from '../exceptions';
 
 @Entity('accounts')
+@Unique(['accountNumber'])
 export class Account {
   @PrimaryGeneratedColumn('uuid')
   id: string;
