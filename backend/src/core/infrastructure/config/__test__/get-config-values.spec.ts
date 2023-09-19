@@ -10,8 +10,6 @@ describe('getConfigValues', () => {
       DB_USER: 'postgres',
       DB_PASSWORD: 'password',
       DB_NAME: 'my-db',
-      ASSETS_BASE_URL: 'https://assets.example.com',
-      CORE_BASE_URL: 'https://core.example.com',
     };
   });
 

@@ -8,7 +8,7 @@ import { Event } from '../../domain/schemas/event.schema';
 export class EventStoreService {
   constructor(@InjectModel(Event.name) private eventModel: Model<Event>) {}
 
-  emit(aggregateType: string, eventType: string, payload: any): Promise<any> {
+  emit(aggregateType: string, eventType: string, payload: any): Promise<Event> {
     const event = new this.eventModel({
       aggregateType,
       eventType,
