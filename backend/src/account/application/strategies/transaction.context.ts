@@ -13,7 +13,7 @@ export class TransactionContext {
     @Inject(DepositStrategy)
     private readonly depositStrategy: TransacionStrategy,
     @Inject(WithdrawStrategy)
-    private readonly withdrawStrategy: TransacionStrategy,
+    private readonly withdrawStrategy: WithdrawStrategy,
   ) {
     this.strategies.set(TransactionType.DEPOSIT, this.depositStrategy);
     this.strategies.set(TransactionType.WITHDRAWAL, this.withdrawStrategy);
@@ -29,6 +29,6 @@ export class TransactionContext {
   public async executeStrategy(payload: TransactionDto): Promise<void> {
     const { type } = payload;
     const strategy = this.getStrategy(type);
-    await strategy.execute(payload);
+    return strategy.execute(payload);
   }
 }

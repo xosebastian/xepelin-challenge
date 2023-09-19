@@ -1,6 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { CreateAccountCommand } from '../implement';
-import { v4 as uuidv4 } from 'uuid';
 import { Account } from '@account/domain/aggregates/account.aggregate';
 import { Inject } from '@nestjs/common';
 import { ACCOUNT_REPOSITORY } from '@account/application/injection-tokens';
@@ -26,11 +25,12 @@ export class CreateAccountHandler
       throw new AccountAlreadyExistsException();
     }
 
-    const account = this.publisher.mergeObjectContext(new Account());
-    const accountId = uuidv4();
-    account.create(accountId, name, accountNumber);
+    const account = this.publisher.mergeObjectContext(
+      new Account(name, accountNumber),
+    );
+    account.create();
     account.commit();
 
-    return { accountId };
+    return account.getId();
   }
 }

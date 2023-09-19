@@ -18,7 +18,6 @@ export class CreateAccountUseCase {
     account.id = accountId;
     account.name = name;
     account.accountNumber = accountNumber;
-
     await this.accountRepository.save(account);
   }
 }

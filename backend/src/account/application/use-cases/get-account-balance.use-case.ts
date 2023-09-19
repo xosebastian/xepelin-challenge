@@ -16,6 +16,6 @@ export class GetAccountBalanceUseCase {
         `Account with ID ${accountId} not found`,
       );
     }
-    return account.balance;
+    return account.getBalance();
   }
 }

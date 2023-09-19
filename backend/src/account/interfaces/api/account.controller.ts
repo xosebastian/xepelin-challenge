@@ -25,8 +25,8 @@ export class AccountController {
       payload.name,
       payload.accountNumber,
     );
-
-    return this.commandBus.execute(command);
+    const accountId = await this.commandBus.execute(command);
+    return { accountId };
   }
 
   @Get('/:id/balance')
