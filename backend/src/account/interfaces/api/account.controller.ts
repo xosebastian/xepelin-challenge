@@ -1,5 +1,3 @@
-//Create controller
-
 import { CreateAccountDto } from '@account/application/dtos';
 import { CreateAccountCommand } from '@account/commands/implement';
 import { GetAccountBalanceQuery } from '@account/queries/implement';
