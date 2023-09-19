@@ -8,6 +8,7 @@ import { AccountRepositoryImplement } from '@account/infrastructure/repositories
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from '@account/domain/entities';
 import { CreatedAccountHandler } from '@account/interfaces/listeners';
+import { EventStoreModule } from '@core/infrastructure/eventstore/eventstore.module';
 
 const commandHandlers = [CreateAccountHandler];
 const eventHandlers = [CreatedAccountHandler];
@@ -20,7 +21,7 @@ const infrastructure = [
 ];
 
 @Module({
-  imports: [CqrsModule, TypeOrmModule.forFeature([Account])],
+  imports: [CqrsModule, TypeOrmModule.forFeature([Account]), EventStoreModule],
   controllers: [AccountController],
   providers: [
     ...infrastructure,

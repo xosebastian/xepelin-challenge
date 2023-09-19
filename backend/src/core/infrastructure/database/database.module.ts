@@ -25,7 +25,6 @@ import { MongooseModule } from '@nestjs/mongoose';
       useFactory: (configService: ConfigService) => {
         const dbConfig: DbConfig =
           configService.get<DbConfig>('config.dbConfig');
-
         return {
           type: 'postgres',
           host: dbConfig.host,
