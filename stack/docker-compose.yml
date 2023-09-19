@@ -24,6 +24,13 @@ services:
     volumes:
       - xepelin-data:/var/lib/postgresql/data
       - ./postgres:/docker-entrypoint-initdb.d
+  mongodb:
+    image: mongo:latest
+    container_name: xepelin-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - xepelin-data:/data/db
 volumes:
   xepelin-data:
 

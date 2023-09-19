@@ -9,6 +9,12 @@ export async function getConfigValues() {
       password: process.env.DB_PASSWORD ?? 'postgres',
       database: process.env.DB_NAME,
     },
+    dsConfig: {
+      host: process.env.DS_HOST,
+      username: process.env.DS_USER,
+      password: process.env.DS_PASSWORD ?? '',
+      database: process.env.DS_NAME,
+    },
     assetsConfig: {
       baseUrl: process.env.ASSETS_BASE_URL,
     },

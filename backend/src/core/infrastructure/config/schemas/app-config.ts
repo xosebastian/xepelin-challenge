@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 
 import { DbConfig } from './db-config';
+import { DsConfig } from './ds-config';
 
 export class AppConfig {
   @IsNotEmpty()
@@ -16,4 +17,9 @@ export class AppConfig {
   @ValidateNested({ each: true })
   @Type(() => DbConfig)
   dbConfig: DbConfig;
+
+  @IsNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => DsConfig)
+  dsConfig: DsConfig;
 }
