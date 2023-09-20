@@ -12,7 +12,6 @@ export class WithdrawStrategy implements TransacionStrategy {
   async execute(payload: TransactionDto): Promise<Account> {
     const { accountId, amount } = payload;
     const command = new WithdrawFundsCommand(accountId, amount);
-    await this.commandBus.execute(command);
-    return null;
+    return this.commandBus.execute(command);
   }
 }

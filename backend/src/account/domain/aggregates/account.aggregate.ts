@@ -1,6 +1,13 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CreatedAccountEvent, DepositedFundsEvent } from '../events';
-import { InternalServerErrorException } from '@nestjs/common';
+import {
+  CreatedAccountEvent,
+  DepositedFundsEvent,
+  WithdrawnFundsEvent,
+} from '../events';
+import {
+  InsufficientFundsException,
+  InvalidAmountException,
+} from '../exceptions';
 
 export class Account extends AggregateRoot {
   constructor(
@@ -17,9 +24,17 @@ export class Account extends AggregateRoot {
   }
 
   deposit(amount: number): void {
-    if (amount < 1) throw new InternalServerErrorException('Invalid amount');
+    if (amount < 1) throw new InvalidAmountException();
     this.balance = this.balance + amount;
     this.apply(new DepositedFundsEvent(this));
+  }
+
+  withdraw(amount: number): void {
+    if (amount < 1) throw new InvalidAmountException();
+    if (this.balance < amount)
+      throw new InsufficientFundsException(amount, this.balance);
+    this.balance = this.balance - amount;
+    this.apply(new WithdrawnFundsEvent(this));
   }
 
   getBalance(): number {
