@@ -1,9 +1,6 @@
 import { IEvent } from '@nestjs/cqrs';
+import { Account } from '../aggregates/account.aggregate';
 
 export class CreatedAccountEvent implements IEvent {
-  constructor(
-    readonly accountId: string,
-    readonly name: string,
-    readonly accountNumber: string,
-  ) {}
+  constructor(readonly account: Account) {}
 }

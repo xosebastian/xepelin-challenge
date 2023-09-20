@@ -5,12 +5,19 @@ import {
 } from '@account/interfaces/api';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CreateAccountHandler } from '@account/commands/handlers';
-import { CreateAccountUseCase, GetAccountBalanceUseCase } from './use-cases';
+import {
+  CreateAccountUseCase,
+  DespositFundsUseCase,
+  GetAccountBalanceUseCase,
+} from './use-cases';
 import { ACCOUNT_REPOSITORY } from './injection-tokens';
 import { AccountRepositoryImplement } from '@account/infrastructure/repositories';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from '@account/domain/entities';
-import { CreatedAccountHandler } from '@account/interfaces/listeners';
+import {
+  CreatedAccountHandler,
+  DepositedFundsHandler,
+} from '@account/interfaces/listeners';
 import { EventStoreModule } from '@core/infrastructure/eventstore/eventstore.module';
 import { GetAccountBalanceHandler } from '@account/queries/handlers';
 import {
@@ -19,11 +26,17 @@ import {
   WithdrawStrategy,
 } from './strategies';
 import { AccountFactory } from '@account/domain/factory';
+import { DepositFundsHandler } from '@account/commands/handlers/deposit-funds.handler';
 
-const commandHandlers = [CreateAccountHandler];
-const eventHandlers = [CreatedAccountHandler, GetAccountBalanceHandler];
+const commandHandlers = [CreateAccountHandler, DepositFundsHandler];
+const eventHandlers = [
+  CreatedAccountHandler,
+  GetAccountBalanceHandler,
+  DepositedFundsHandler,
+];
 const application = [
   CreateAccountUseCase,
+  DespositFundsUseCase,
   GetAccountBalanceUseCase,
   WithdrawStrategy,
   DepositStrategy,

@@ -18,13 +18,19 @@ export class AccountRepositoryImplement implements AccountRepository {
     return account ? this.toDomain(account) : null;
   }
 
-  async save(account: Account): Promise<void> {
-    await this.repository.save(account);
+  async save(account: AccountDomain): Promise<void> {
+    const entity = this.toEntity(account);
+    await this.repository.save(entity);
   }
 
-  async remove(id: string): Promise<void> {
-    await this.repository.delete(id);
+  async deposit(id: string, amount: number) {
+    await this.repository.update(id, { balance: amount });
   }
+
+  async withdraw(id: string, amount: number) {
+    await this.repository.update(id, { balance: amount });
+  }
+
   async findByAccountNumber(
     accountNumber: string,
   ): Promise<AccountDomain | null> {
@@ -34,5 +40,8 @@ export class AccountRepositoryImplement implements AccountRepository {
 
   private toDomain(account: Account): AccountDomain {
     return AccountFactory.createFromEntity(account);
+  }
+  private toEntity(account: AccountDomain): Account {
+    return AccountFactory.create(account);
   }
 }

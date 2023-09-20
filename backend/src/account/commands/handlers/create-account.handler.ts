@@ -5,6 +5,7 @@ import { Inject } from '@nestjs/common';
 import { ACCOUNT_REPOSITORY } from '@account/application/injection-tokens';
 import { AccountRepository } from '@account/domain/repositories';
 import { AccountAlreadyExistsException } from '../exceptions';
+import { v4 as uuidv4 } from 'uuid';
 
 @CommandHandler(CreateAccountCommand)
 export class CreateAccountHandler
@@ -25,8 +26,10 @@ export class CreateAccountHandler
       throw new AccountAlreadyExistsException();
     }
 
+    const accountId = uuidv4();
+
     const account = this.publisher.mergeObjectContext(
-      new Account(name, accountNumber),
+      new Account(accountId, name, accountNumber),
     );
     account.create();
     account.commit();

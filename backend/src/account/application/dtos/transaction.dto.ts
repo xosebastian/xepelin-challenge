@@ -1,5 +1,11 @@
 import { TransactionType } from '@account/domain/enums';
-import { IsEnum, IsNotEmpty, IsNumber, IsUUID } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsUUID,
+} from 'class-validator';
 
 export class TransactionDto {
   @IsUUID()
@@ -7,6 +13,7 @@ export class TransactionDto {
   readonly accountId: string;
 
   @IsNumber()
+  @IsPositive()
   @IsNotEmpty()
   readonly amount: number;
 

@@ -4,12 +4,12 @@ import { ACCOUNT_REPOSITORY } from '../injection-tokens';
 import { Account } from '@account/domain/aggregates/account.aggregate';
 
 @Injectable()
-export class CreateAccountUseCase {
+export class DespositFundsUseCase {
   constructor(
     @Inject(ACCOUNT_REPOSITORY) private accountRepository: AccountRepository,
   ) {}
 
   async execute(account: Account): Promise<void> {
-    await this.accountRepository.save(account);
+    this.accountRepository.deposit(account.getId(), account.getBalance());
   }
 }

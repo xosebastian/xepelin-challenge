@@ -4,6 +4,7 @@ import { DepositStrategy } from './deposit-strategy';
 import { WithdrawStrategy } from './withdraw-strategy';
 import { TransacionStrategy } from './transaction-strategy.abstract';
 import { TransactionDto } from '../dtos';
+import { Account } from '@account/domain/aggregates/account.aggregate';
 
 @Injectable()
 export class TransactionContext {
@@ -26,9 +27,10 @@ export class TransactionContext {
     return this.strategies.get(type);
   }
 
-  public async executeStrategy(payload: TransactionDto): Promise<void> {
+  public async executeStrategy(payload: TransactionDto): Promise<Account> {
     const { type } = payload;
     const strategy = this.getStrategy(type);
+
     return strategy.execute(payload);
   }
 }

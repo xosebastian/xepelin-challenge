@@ -19,7 +19,6 @@ export class DepositFundsHandler
     const { accountId, amount } = command;
 
     let account = await this.accountRepository.findById(accountId);
-
     if (!account) {
       throw new AccountNotFoundException();
     }
@@ -27,5 +26,7 @@ export class DepositFundsHandler
     account = this.publisher.mergeObjectContext(account);
     account.deposit(amount);
     account.commit();
+
+    return account;
   }
 }

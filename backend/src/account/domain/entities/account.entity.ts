@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { InsufficientFundsException } from '../exceptions';
 
 @Entity('accounts')
 @Unique(['accountNumber'])
@@ -21,15 +20,4 @@ export class Account {
     default: 0,
   })
   balance: number;
-
-  deposit(amount: number): void {
-    this.balance += amount;
-  }
-
-  withdraw(amount: number): void {
-    if (amount > this.balance) {
-      throw new InsufficientFundsException(amount, this.balance);
-    }
-    this.balance -= amount;
-  }
 }

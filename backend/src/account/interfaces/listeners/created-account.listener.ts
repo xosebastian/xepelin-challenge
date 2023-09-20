@@ -13,12 +13,12 @@ export class CreatedAccountHandler
   ) {}
 
   async handle(event: CreatedAccountEvent) {
-    const { accountId, name, accountNumber } = event;
-    await this.createAccountUseCase.execute(accountId, name, accountNumber);
-    await this.eventStoreService.emit('Account', 'CreatedAccountEvent', {
-      accountId,
-      name,
-      accountNumber,
-    });
+    const { account } = event;
+    await this.createAccountUseCase.execute(account);
+    await this.eventStoreService.emit(
+      'Account',
+      CreatedAccountEvent.name,
+      account,
+    );
   }
 }
