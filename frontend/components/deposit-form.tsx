@@ -17,7 +17,10 @@ import { useForm } from "react-hook-form";
 
 import { useAppDispatch } from "@/redux/store";
 import { deposit } from "@/redux/features/account-slice";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
+import { useToast } from "./ui/use-toast";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { useState } from "react";
 
 const formSchema = z.object({
   balance: z
@@ -33,6 +36,8 @@ const formSchema = z.object({
 
 export function DepositForm({ accountId }: { accountId: string }) {
   const dispatch = useAppDispatch();
+  const { toast } = useToast();
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,16 +49,27 @@ export function DepositForm({ accountId }: { accountId: string }) {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { balance } = values;
 
-    await axios.post("/api/deposit", {
-      accountId,
-      balance,
-    });
-
-    dispatch(
-      deposit({
+    try {
+      await axios.post("/api/deposit", {
+        accountId,
         balance,
-      })
-    );
+      });
+
+      dispatch(
+        deposit({
+          balance,
+        })
+      );
+      toast({
+        title: "Deposit",
+        description: "Deposit was successful",
+      });
+    } catch (error: any) {
+      const message = isAxiosError(error)
+        ? error?.response?.data.message
+        : error?.message ?? "Something went wrong";
+      setError(message);
+    }
   }
 
   return (
@@ -81,6 +97,12 @@ export function DepositForm({ accountId }: { accountId: string }) {
           <Button type="submit">Deposit</Button>
         </form>
       </Form>
+      {error && (
+        <Alert variant={"destructive"} className="mt-5">
+          <AlertTitle>Ups!</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
     </>
   );
 }

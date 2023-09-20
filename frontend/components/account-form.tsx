@@ -20,6 +20,7 @@ import { create, clear } from "@/redux/features/account-slice";
 import axios, { AxiosResponse, isAxiosError } from "axios";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
+import { useToast } from "./ui/use-toast";
 
 const formSchema = z.object({
   accountName: z.string().min(2, {
@@ -48,6 +49,7 @@ export function AccountForm() {
   const dispatch = useAppDispatch();
   const account = useAppSelector((state) => state.account);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -78,6 +80,11 @@ export function AccountForm() {
           id: accountId,
         })
       );
+
+      toast({
+        title: "Account created",
+        description: `Account ${accountName} created with id ${accountId}`,
+      });
     } catch (error: any) {
       const message = isAxiosError(error)
         ? error?.response?.data.message
@@ -112,11 +119,13 @@ export function AccountForm() {
         </h3>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5" onChange={
-          () => {
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-2 p-5"
+          onChange={() => {
             setError(null);
-          }
-        }>
+          }}
+        >
           <FormField
             control={form.control}
             name="accountName"
@@ -164,8 +173,8 @@ export function AccountForm() {
         </form>
       </Form>
       {error && (
-        <Alert variant={"destructive"}>
-          <AlertTitle>Error</AlertTitle>
+        <Alert variant={"destructive"} className="mt-5">
+          <AlertTitle>Ups!</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}

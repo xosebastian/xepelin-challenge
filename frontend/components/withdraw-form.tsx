@@ -17,7 +17,10 @@ import { useForm } from "react-hook-form";
 
 import { useAppDispatch } from "@/redux/store";
 import { withdraw } from "@/redux/features/account-slice";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
+import { useToast } from "./ui/use-toast";
+import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 const formSchema = z.object({
   balance: z
@@ -33,6 +36,8 @@ const formSchema = z.object({
 
 export function WithdrawForm({ accountId }: { accountId: string }) {
   const dispatch = useAppDispatch();
+  const { toast } = useToast();
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,8 +60,16 @@ export function WithdrawForm({ accountId }: { accountId: string }) {
           balance,
         })
       );
-    } catch (error) {
-      console.log(error);
+
+      toast({
+        title: "Withdraw successful",
+        description: "The withdraw was successful.",
+      });
+    } catch (error: any) {
+      const message = isAxiosError(error)
+        ? error?.response?.data.message
+        : error?.message ?? "Something went wrong";
+      setError(message);
     }
   }
 
@@ -68,7 +81,11 @@ export function WithdrawForm({ accountId }: { accountId: string }) {
         </h3>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 pl-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 pl-6"  onChange={
+          () => {
+            setError(null);
+          }
+        }>
           <FormField
             control={form.control}
             name="balance"
@@ -85,6 +102,12 @@ export function WithdrawForm({ accountId }: { accountId: string }) {
           <Button type="submit">Withdraw</Button>
         </form>
       </Form>
+      {error && (
+        <Alert variant={"destructive"} className="mt-5">
+          <AlertTitle>Ups!</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
     </>
   );
 }

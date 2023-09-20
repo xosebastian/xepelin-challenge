@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { fontSans } from "@/lib/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ReduxProvider } from "@/redux/provider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -34,6 +35,7 @@ export default function RootLayout({
                       <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow mt-10">
                         {children}
                       </div>
+                      <Toaster />
                     </section>
                   </div>
                 </div>
