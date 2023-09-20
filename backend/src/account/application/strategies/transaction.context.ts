@@ -20,7 +20,7 @@ export class TransactionContext {
     this.strategies.set(TransactionType.WITHDRAWAL, this.withdrawStrategy);
   }
 
-  private getStrategy(type: TransactionType): TransacionStrategy {
+  public getStrategy(type: TransactionType): TransacionStrategy {
     if (!this.strategies.has(type)) {
       throw new BadRequestException(`Strategy not found for ${type}`);
     }
