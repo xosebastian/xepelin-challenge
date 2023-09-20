@@ -2,7 +2,7 @@ import { Account } from '../entities';
 import { Account as AccountDomain } from '../aggregates/account.aggregate';
 
 export class AccountFactory {
-  static createFromEntity(entity: Account) {
+  static recreate(entity: Account) {
     const account = new AccountDomain(
       entity.id,
       entity.name,

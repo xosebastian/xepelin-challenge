@@ -39,7 +39,7 @@ export class AccountRepositoryImplement implements AccountRepository {
   }
 
   private toDomain(account: Account): AccountDomain {
-    return AccountFactory.createFromEntity(account);
+    return AccountFactory.recreate(account);
   }
   private toEntity(account: AccountDomain): Account {
     return AccountFactory.create(account);
