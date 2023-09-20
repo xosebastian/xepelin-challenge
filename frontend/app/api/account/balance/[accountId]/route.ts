@@ -1,14 +1,24 @@
-import axios, { HttpStatusCode, isAxiosError } from "axios";
+import axios, { AxiosResponse, HttpStatusCode, isAxiosError } from "axios";
 import { NextResponse } from "next/server";
 
 const API_URL = process.env.API_URL;
 const CREATE_ACCOUNT_ENDPOINT = "accounts";
 
+interface Params {
+  accountId: string;
+}
 
-export async function POST(request: Request) {
- 
-  const {accountName, accountNumber, balance } = await request.json();
+export async function GET(req: Request, { params }: { params: Params }) {
+  const { accountId } = params;
 
+  if (!accountId) {
+    return NextResponse.json(
+      { message: "accountId is not defined" },
+      {
+        status: HttpStatusCode.BadRequest,
+      }
+    );
+  }
 
   if (!API_URL) {
     return NextResponse.json(
@@ -20,16 +30,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await axios.post(`${API_URL}/${CREATE_ACCOUNT_ENDPOINT}`, {
-      name: accountName,
-      accountNumber,
-      balance,
-    });
-
-    
-
+    const response: AxiosResponse<{ balance: string }> = await axios.get(
+      `${API_URL}/${CREATE_ACCOUNT_ENDPOINT}/${accountId}/balance`,
+      {}
+    );
     return NextResponse.json(response.data, {
-      status: HttpStatusCode.Created,
+      status: HttpStatusCode.Ok,
     });
   } catch (error) {
     if (isAxiosError(error)) {

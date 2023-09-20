@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { AppDispatch, useAppDispatch, useAppSelector } from "@/redux/store";
-import { create } from "@/redux/features/account-slice";
+
+import {  useAppDispatch, useAppSelector } from "@/redux/store";
+import { create, clear } from "@/redux/features/account-slice";
+import axios, { AxiosResponse } from "axios";
 
 const formSchema = z.object({
   accountName: z.string().min(2, {
@@ -54,18 +55,23 @@ export function AccountForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { accountName, accountNumber, balance } = values;
 
-    dispatch(
-      create({
-        id: "1",
+    const {
+      data: { accountId },
+    }: AxiosResponse<{ accountId: string }> = await axios.post(
+      "/api/create-account",
+      {
         accountName,
         accountNumber,
         balance,
+      }
+    );
+
+    dispatch(
+      create({
+        id: accountId,
       })
     );
   }
@@ -76,20 +82,14 @@ export function AccountForm() {
         <h3 className="text-2xl font-semibold leading-none tracking-tight">
           My Account
         </h3>
-        <ul className="flex flex-col space-y-1.5 pt-5">
-          <li className="text-1xl font-semibold leading-none tracking-tight">
-            id: {account.id}
-          </li>
-          <li className="text-1xl font-semibold leading-none tracking-tight">
-            name: {account.accountName}
-          </li>
-          <li className="text-1xl font-semibold leading-none tracking-tight">
-            number: {account.accountNumber}
-          </li>
-          <li className="text-1xl font-semibold leading-none tracking-tight">
-            balance: {account.balance}
-          </li>
-        </ul>
+        <p className="text-sm text-muted-foreground">id: {account.id}</p>
+        <Button
+          onClick={() => {
+            dispatch(clear());
+          }}
+        >
+          Create Another
+        </Button>
       </div>
     );
 

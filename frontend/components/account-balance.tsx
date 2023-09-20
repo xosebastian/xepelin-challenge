@@ -1,9 +1,37 @@
 "use client";
-import { useAppSelector } from "@/redux/store"
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import axios, { AxiosResponse } from "axios";
+import { useEffect } from "react";
+import { update } from "@/redux/features/account-slice";
 
-export function AccountBalance () {
-
+export function AccountBalance() {
+  const accountId = useAppSelector((state) => state.account.id);
   const balance = useAppSelector((state) => state.account.balance);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!accountId) return;
+
+    const getBalance = async () => {
+      try {
+        const {
+          data: { balance },
+        }: AxiosResponse<{ balance: string }> = await axios.get(
+          `/api/account/balance/${accountId}`,
+          {}
+        );
+        dispatch(
+          update({
+            balance: parseFloat(balance),
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getBalance();
+  }, [accountId, dispatch]);
 
   return (
     <div className="flex flex-col space-y-1.5 p-6">
@@ -11,5 +39,5 @@ export function AccountBalance () {
         $ {balance}
       </h3>
     </div>
-  )
+  );
 }

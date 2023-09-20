@@ -3,15 +3,11 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface AccountState {
   id: string,
-  accountName: string,
-  accountNumber: string,
   balance: number,
 }
 
 const initialState: AccountState = {
   id: '',
-  accountName: '',
-  accountNumber: '',
   balance: 0,
 }
 
@@ -19,14 +15,14 @@ export const accountSlice = createSlice({
   name: 'account',
   initialState,
   reducers: {
-    create: (state, action: PayloadAction<AccountState>) => {
+    create: (state, action: PayloadAction<{id : string}>) => {
       state.id = action.payload.id
-      state.accountName = action.payload.accountName
-      state.accountNumber = action.payload.accountNumber
-      state.balance = action.payload.balance
     },
     clear: () => {
       return initialState
+    },
+    update: (state, action: PayloadAction<{balance: number}>) => {
+      state.balance = action.payload.balance
     },
     deposit: (state, action: PayloadAction<number>) => {
       state.balance += action.payload
@@ -38,6 +34,6 @@ export const accountSlice = createSlice({
 })
 
 
-export const { create } = accountSlice.actions
+export const { create, clear, deposit, withdraw, update } = accountSlice.actions
 
 export default accountSlice.reducer
