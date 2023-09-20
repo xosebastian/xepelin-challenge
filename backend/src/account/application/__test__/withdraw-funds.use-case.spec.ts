@@ -1,37 +1,43 @@
 import { Test, TestingModule } from '@nestjs/testing';
-
 import { AccountRepository } from '@account/domain/repositories';
 import { Account } from '@account/domain/aggregates/account.aggregate';
-import { CreateAccountUseCase } from '../use-cases';
+import { WithdrawFundsUseCase } from '../use-cases';
 import { ACCOUNT_REPOSITORY } from '../injection-tokens';
 import { v4 as uuidv4 } from 'uuid';
 
-describe('CreateAccountUseCase', () => {
-  let useCase: CreateAccountUseCase;
+describe('WithdrawFundsUseCase', () => {
+  let useCase: WithdrawFundsUseCase;
   let accountRepository: AccountRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CreateAccountUseCase,
+        WithdrawFundsUseCase,
         {
           provide: ACCOUNT_REPOSITORY,
           useValue: {
-            save: jest.fn(),
+            withdraw: jest.fn(),
           },
         },
       ],
     }).compile();
 
-    useCase = module.get<CreateAccountUseCase>(CreateAccountUseCase);
+    useCase = module.get<WithdrawFundsUseCase>(WithdrawFundsUseCase);
     accountRepository = module.get<AccountRepository>(ACCOUNT_REPOSITORY);
   });
 
   describe('execute', () => {
-    it('should save the account to the repository', async () => {
-      const account = new Account(uuidv4(), 'John Doe', '1234567890');
+    const balance = 100;
+    const account = new Account(uuidv4(), 'John Doe', '1234567890', balance);
+
+    it('should withdraw funds from the account', async () => {
+      account.withdraw(balance);
       await useCase.execute(account);
-      expect(accountRepository.save).toHaveBeenCalledWith(account);
+      expect(accountRepository.withdraw).toHaveBeenCalledWith(
+        account.getId(),
+        account.getBalance(),
+      );
+      expect(account.getBalance()).toBe(0);
     });
   });
 });
