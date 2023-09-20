@@ -30,7 +30,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - xepelin-data:/data/db
+      - xepelin-data:/var/lib/mongo/data
 volumes:
   xepelin-data:
 
