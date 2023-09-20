@@ -15,9 +15,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 
-import {  useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { create, clear } from "@/redux/features/account-slice";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, isAxiosError } from "axios";
+import { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 
 const formSchema = z.object({
   accountName: z.string().min(2, {
@@ -25,16 +27,16 @@ const formSchema = z.object({
   }),
   accountNumber: z
     .string()
-    .min(5, {
-      message: "The account number should have at least 5 digits.",
+    .min(10, {
+      message: "The account number should have at least 10 digits.",
     })
     .regex(/^\d+$/, {
       message: "The account number should only contain numbers.",
     }),
   balance: z
     .string()
-    .max(4, {
-      message: "The balance should have at most 4 digits.",
+    .max(5, {
+      message: "The balance should have at most 5 digits.",
     })
     .regex(/^\d+(\.\d{1,2})?$/, {
       message: "The balance should be a number with up to 2 decimal places.",
@@ -45,6 +47,7 @@ const formSchema = z.object({
 export function AccountForm() {
   const dispatch = useAppDispatch();
   const account = useAppSelector((state) => state.account);
+  const [error, setError] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,22 +61,30 @@ export function AccountForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { accountName, accountNumber, balance } = values;
 
-    const {
-      data: { accountId },
-    }: AxiosResponse<{ accountId: string }> = await axios.post(
-      "/api/create-account",
-      {
-        accountName,
-        accountNumber,
-        balance,
-      }
-    );
+    try {
+      const {
+        data: { accountId },
+      }: AxiosResponse<{ accountId: string }> = await axios.post(
+        "/api/account/create",
+        {
+          accountName,
+          accountNumber,
+          balance,
+        }
+      );
 
-    dispatch(
-      create({
-        id: accountId,
-      })
-    );
+      dispatch(
+        create({
+          id: accountId,
+        })
+      );
+    } catch (error: any) {
+      const message = isAxiosError(error)
+        ? error?.response?.data.message
+        : error?.message ?? "Something went wrong";
+
+      setError(message);
+    }
   }
 
   if (account.id)
@@ -101,7 +112,11 @@ export function AccountForm() {
         </h3>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 p-5" onChange={
+          () => {
+            setError(null);
+          }
+        }>
           <FormField
             control={form.control}
             name="accountName"
@@ -123,7 +138,7 @@ export function AccountForm() {
                 <FormLabel>Number</FormLabel>
                 <FormControl>
                   <Input
-                    maxLength={5}
+                    maxLength={10}
                     placeholder="Enter your account number"
                     {...field}
                   />
@@ -148,6 +163,12 @@ export function AccountForm() {
           <Button type="submit">Create</Button>
         </form>
       </Form>
+      {error && (
+        <Alert variant={"destructive"}>
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
     </>
   );
 }

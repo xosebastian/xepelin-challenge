@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 
 import { useAppDispatch } from "@/redux/store";
-import { update } from "@/redux/features/account-slice";
+import { deposit } from "@/redux/features/account-slice";
 import axios from "axios";
 
 const formSchema = z.object({
@@ -50,7 +50,7 @@ export function DepositForm({ accountId }: { accountId: string }) {
     });
 
     dispatch(
-      update({
+      deposit({
         balance,
       })
     );

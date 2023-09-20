@@ -24,11 +24,11 @@ export const accountSlice = createSlice({
     update: (state, action: PayloadAction<{balance: number}>) => {
       state.balance = action.payload.balance
     },
-    deposit: (state, action: PayloadAction<number>) => {
-      state.balance += action.payload
+    deposit: (state, action: PayloadAction<{balance: number}>) => {
+      state.balance += action.payload.balance
     },
-    withdraw: (state, action: PayloadAction<number>) => {
-      state.balance -= action.payload
+    withdraw: (state, action: PayloadAction<{balance: number}>) => {
+      state.balance -= action.payload.balance
     }
   },
 })

@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 
 import { useAppDispatch } from "@/redux/store";
-import { update } from "@/redux/features/account-slice";
+import { withdraw } from "@/redux/features/account-slice";
 import axios from "axios";
 
 const formSchema = z.object({
@@ -51,7 +51,7 @@ export function WithdrawForm({ accountId }: { accountId: string }) {
       });
 
       dispatch(
-        update({
+        withdraw({
           balance,
         })
       );
