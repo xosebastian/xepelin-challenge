@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsPositive, IsString } from 'class-validator';
 
 export class CreateAccountDto {
   @IsString()
@@ -8,4 +8,8 @@ export class CreateAccountDto {
   @IsString()
   @IsNotEmpty()
   readonly accountNumber: string;
+
+  @IsPositive()
+  @IsNotEmpty()
+  readonly balance: number;
 }

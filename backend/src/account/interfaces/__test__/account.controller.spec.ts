@@ -40,6 +40,7 @@ describe('AccountController', () => {
       const mockDto: CreateAccountDto = {
         name: 'John',
         accountNumber: '12345',
+        balance: 100,
       };
       mockCommandBus.execute.mockResolvedValue('mocked-uuid');
 

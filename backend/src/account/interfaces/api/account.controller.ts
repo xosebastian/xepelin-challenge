@@ -24,6 +24,7 @@ export class AccountController {
     const command = new CreateAccountCommand(
       payload.name,
       payload.accountNumber,
+      payload.balance,
     );
     const accountId = await this.commandBus.execute(command);
     return { accountId };

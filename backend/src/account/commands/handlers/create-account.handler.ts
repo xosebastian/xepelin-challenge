@@ -17,7 +17,7 @@ export class CreateAccountHandler
   ) {}
 
   async execute(command: CreateAccountCommand) {
-    const { name, accountNumber } = command;
+    const { name, accountNumber, balance } = command;
 
     const existingAccount =
       await this.accountRepository.findByAccountNumber(accountNumber);
@@ -29,7 +29,7 @@ export class CreateAccountHandler
     const accountId = uuidv4();
 
     const account = this.publisher.mergeObjectContext(
-      new Account(accountId, name, accountNumber),
+      new Account(accountId, name, accountNumber, balance),
     );
     account.create();
     account.commit();

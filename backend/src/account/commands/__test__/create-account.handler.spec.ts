@@ -24,7 +24,7 @@ describe('CreateAccountHandler', () => {
   });
 
   it('should successfully create an account', async () => {
-    const command = new CreateAccountCommand('John', '12345');
+    const command = new CreateAccountCommand('John', '12345', 100);
     mockAccountRepository.findByAccountNumber.mockResolvedValue(null);
     const mockAccountId = uuidv4();
 
@@ -40,7 +40,7 @@ describe('CreateAccountHandler', () => {
   });
 
   it('should throw an error if the account already exists', async () => {
-    const command = new CreateAccountCommand('John', '12345');
+    const command = new CreateAccountCommand('John', '12345', 100);
     const existingAccount = new Account('existing-uuid', 'John', '12345');
     mockAccountRepository.findByAccountNumber.mockResolvedValue(
       existingAccount,
