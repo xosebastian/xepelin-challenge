@@ -2,6 +2,7 @@
 
 import { AccountBalance } from "@/components/account-balance";
 import { AccountForm } from "@/components/account-form";
+import { Deposit } from "@/components/deposit";
 import { MainNav } from "@/components/main-nav";
 
 import {
@@ -11,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Withdraw } from "@/components/withdraw";
 
 
 
@@ -41,19 +43,20 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
-          <CardContent className="pl-2">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12 p-5" >
+        <Card className="col-span-12">
+          <CardContent>
             <AccountForm />
           </CardContent>
         </Card>
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Recent Sales</CardTitle>
-            <CardDescription>You made 265 sales this month.</CardDescription>
-          </CardHeader>
+        <Card className="col-span-6">
           <CardContent>
-            <>asd</>
+            <Deposit />
+          </CardContent>
+        </Card>
+        <Card className="col-span-6">
+          <CardContent>
+            <Withdraw />
           </CardContent>
         </Card>
       </div>
