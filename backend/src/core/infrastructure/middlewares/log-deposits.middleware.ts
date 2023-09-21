@@ -8,7 +8,6 @@ export class LogDepositsMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     if (
       req.method === 'POST' &&
-      req.path === '/transactions' &&
       req.body.amount > 10000 &&
       req.body.type === 'DEPOSIT'
     ) {
