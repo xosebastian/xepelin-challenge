@@ -36,5 +36,9 @@ To run the app:
 backend http://localhost:4000
 frontend http://localhost:3000
 ```
+## Implementation:
 
+<p align="center">
+  <img src="aws.png"/>
+</p>
 
