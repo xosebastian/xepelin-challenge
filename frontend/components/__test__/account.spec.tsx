@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import { Provider } from "react-redux";
 import axios from "axios";
-import { store } from "@/redux/store"; // ajusta esta importación según tu estructura de archivos
+import { store } from "@/redux/store";
 import { Account } from "../features/account/account";
 
 jest.mock("axios");

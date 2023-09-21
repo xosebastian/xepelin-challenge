@@ -22,6 +22,7 @@ const customJestConfig = {
     "!**/api/**",
     "!**/lib/**",
     "!**/theme-provider.tsx",
+    "!**/provider.tsx",
   ],
 };
 module.exports = createJestConfig(customJestConfig);

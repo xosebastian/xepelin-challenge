@@ -35,6 +35,7 @@ export function Transactions() {
         description: `${type} was successful`,
       });
     } catch (error: any) {
+
       const message = isAxiosError(error)
         ? error?.response?.data.message
         : error?.message ?? "Something went wrong";
@@ -57,7 +58,7 @@ export function Transactions() {
           />
 
           {error && (
-            <Alert variant={"destructive"} className="mt-5">
+            <Alert data-testid="alert" variant={"destructive"} className="mt-5">
               <AlertTitle>Ups!</AlertTitle>
               <AlertDescription>{error}</AlertDescription>
             </Alert>
