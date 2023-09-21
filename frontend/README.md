@@ -24,7 +24,7 @@ npm install
 - _Run the project_
 
 ```
-npm start
+npm run dev
 ```
 
 - _Run Test_
