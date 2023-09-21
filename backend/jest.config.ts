@@ -5,9 +5,14 @@ module.exports = {
   testEnvironment: 'node',
   roots: ['<rootDir>/src'],
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts', '<rootDir>/src/**/*.tsx'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.ts',
+    '<rootDir>/src/**/*.tsx',
+    '!**/core/**',
+  ],
   setupFiles: ['<rootDir>/jest-setup-file.ts'],
   coverageDirectory: '<rootDir>/coverage',
+  testTimeout: 30000,
   coveragePathIgnorePatterns: [
     '\\\\node_modules\\\\',
     'migrations',

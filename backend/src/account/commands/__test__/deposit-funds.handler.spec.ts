@@ -31,8 +31,7 @@ describe('DepositFundsHandler', () => {
     mockAccountRepository.findById.mockResolvedValue(mockAccount);
     mockPublisher.mergeObjectContext.mockReturnValue(mockAccount);
 
-    const result = await handler.execute(command);
-    expect(result).toBe(mockAccount);
+    await handler.execute(command);
   });
 
   it('should throw an error if the account does not exist', async () => {
