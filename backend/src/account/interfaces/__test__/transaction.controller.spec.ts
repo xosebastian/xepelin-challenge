@@ -4,7 +4,6 @@ import { TransactionContext } from '@account/application/strategies';
 import { TransactionDto } from '@account/application/dtos';
 import { TransacionController } from '../api';
 import { TransactionType } from '@account/domain/enums';
-import { Account } from '@account/domain/aggregates/account.aggregate';
 
 describe('TransacionController', () => {
   let controller: TransacionController;
@@ -36,15 +35,13 @@ describe('TransacionController', () => {
         amount: 100,
         type: TransactionType.DEPOSIT,
       };
-      const mockAccount = new Account('mocked-uuid', 'John', '12345', 100);
-      mockTransactionContext.executeStrategy.mockResolvedValue(mockAccount);
+      mockTransactionContext.executeStrategy.mockResolvedValue();
 
-      const result = await controller.handleTransaction(mockDto);
+      await controller.handleTransaction(mockDto);
 
       expect(mockTransactionContext.executeStrategy).toHaveBeenCalledWith(
         mockDto,
       );
-      expect(result).toEqual(mockAccount);
     });
   });
 });
