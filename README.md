@@ -6,7 +6,7 @@
 - npm
 - Docker
 
-- Features:
+## Features:
 `Nest`, `CQRS`, `Postgres`, `Mongo`, `Next`,
 `Redux Toolkit`, `Shadcn`, `Tailwind`, `Eslint` and `Jest`
 
@@ -34,7 +34,7 @@ npm run services:stop
 To run the app:
 ```bash
 backend http://localhost:4000
-frontent http://localhost:3000
+frontend http://localhost:3000
 ```
 
 
