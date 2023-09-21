@@ -26,7 +26,5 @@ export class DepositFundsHandler
     account = this.publisher.mergeObjectContext(account);
     account.deposit(amount);
     account.commit();
-
-    return account;
   }
 }

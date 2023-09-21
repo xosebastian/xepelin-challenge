@@ -26,7 +26,5 @@ export class WithdrawFundsHandler
     account = this.publisher.mergeObjectContext(account);
     account.withdraw(amount);
     account.commit();
-
-    return account;
   }
 }
