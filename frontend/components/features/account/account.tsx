@@ -33,8 +33,6 @@ export function Account() {
         }
       );
 
-      console.log(accountId);
-
       dispatch(
         create({
           id: accountId,

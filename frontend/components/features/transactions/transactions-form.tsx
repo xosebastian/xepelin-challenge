@@ -64,6 +64,7 @@ export function TransactionsForm({ onSubmit, onChange }: Props) {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  data-testid="type"
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -86,7 +87,7 @@ export function TransactionsForm({ onSubmit, onChange }: Props) {
               <FormItem>
                 <FormLabel>Balance</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input data-testid="balance" type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -20,9 +20,6 @@ export function AccountBalance() {
           `/api/account/balance/${accountId}`,
           {}
         );
-
-        console.log(balance);
-
         dispatch(
           update({
             balance: parseFloat(balance),
