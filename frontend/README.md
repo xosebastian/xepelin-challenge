@@ -1,6 +1,6 @@
 
 
-# Xeplin Challenge FrontEnd
+# Xeplin Challenge Frontend
 
 
 Features:
