@@ -2,7 +2,7 @@ import axios, { AxiosResponse, HttpStatusCode, isAxiosError } from "axios";
 import { NextResponse } from "next/server";
 
 const API_URL = process.env.API_URL;
-const CREATE_ACCOUNT_ENDPOINT = "accounts";
+const ACCOUNT_ENDPOINT = "accounts";
 
 interface Params {
   accountId: string;
@@ -31,7 +31,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
 
   try {
     const response: AxiosResponse<{ balance: string }> = await axios.get(
-      `${API_URL}/${CREATE_ACCOUNT_ENDPOINT}/${accountId}/balance`,
+      `${API_URL}/${ACCOUNT_ENDPOINT}/${accountId}/balance`,
       {}
     );
     return NextResponse.json(response.data, {

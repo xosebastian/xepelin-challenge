@@ -2,10 +2,10 @@ import axios, { HttpStatusCode, isAxiosError } from "axios";
 import { NextResponse } from "next/server";
 
 const API_URL = process.env.API_URL;
-const DEPOSIT_ENDPOINT = "transactions";
+const TRANSACTIONS_ENDPOINT = "transactions";
 
 export async function POST(request: Request) {
-  const { accountId, balance } = await request.json();
+  const { accountId, balance, type } = await request.json();
 
   if (!API_URL) {
     return NextResponse.json(
@@ -17,10 +17,10 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await axios.post(`${API_URL}/${DEPOSIT_ENDPOINT}`, {
+    const response = await axios.post(`${API_URL}/${TRANSACTIONS_ENDPOINT}`, {
       accountId,
       amount: balance,
-      type: "DEPOSIT",
+      type,
     });
 
     return NextResponse.json(response.data, {

@@ -24,16 +24,17 @@ export const accountSlice = createSlice({
     update: (state, action: PayloadAction<{balance: number}>) => {
       state.balance = action.payload.balance
     },
-    deposit: (state, action: PayloadAction<{balance: number}>) => {
-      state.balance += action.payload.balance
+    transactions: (state, action: PayloadAction<{balance: number, type: string}>) => {
+      if (action.payload.type === 'DEPOSIT') {
+        state.balance += action.payload.balance
+      }else if (action.payload.type === 'WITHDRAWAL') {
+        state.balance -= action.payload.balance
+      }
     },
-    withdraw: (state, action: PayloadAction<{balance: number}>) => {
-      state.balance -= action.payload.balance
-    }
   },
 })
 
 
-export const { create, clear, deposit, withdraw, update } = accountSlice.actions
+export const { create, clear, update, transactions } = accountSlice.actions
 
 export default accountSlice.reducer

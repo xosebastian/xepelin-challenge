@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainNav should render the Xeplin Bank link 1`] = `
+<div>
+  <nav
+    class="flex items-center space-x-4 lg:space-x-6"
+  >
+    <a
+      class="text-sm font-medium transition-colors hover:text-primary"
+      href="/examples/dashboard"
+    >
+      Xeplin Bank
+    </a>
+  </nav>
+</div>
+`;

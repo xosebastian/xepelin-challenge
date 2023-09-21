@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`AccountBalance should render an error message when the balance is not defined 1`] = `
+<div>
+  <div
+    class="flex flex-col space-y-1.5 p-6"
+  >
+    <h3
+      class="text-2xl font-semibold leading-none tracking-tight"
+      data-testid="balance"
+    >
+      $ 
+      0
+    </h3>
+  </div>
+</div>
+`;
+
 exports[`AccountBalance should render the account balance when the balance is defined 1`] = `
 <div>
   <div

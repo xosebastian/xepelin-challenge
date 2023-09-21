@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "@/redux/store";
-import { AccountBalance } from "../account-balance";
+import { AccountBalance } from "../features/account/account-balance";
 import { create, update, clear } from "@/redux/features/account-slice";
 
 

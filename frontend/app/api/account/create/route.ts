@@ -2,7 +2,7 @@ import axios, { HttpStatusCode, isAxiosError } from "axios";
 import { NextResponse } from "next/server";
 
 const API_URL = process.env.API_URL;
-const CREATE_ACCOUNT_ENDPOINT = "accounts";
+const ACCOUNT_ENDPOINT = "accounts";
 
 
 export async function POST(request: Request) {
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await axios.post(`${API_URL}/${CREATE_ACCOUNT_ENDPOINT}`, {
+    const response = await axios.post(`${API_URL}/${ACCOUNT_ENDPOINT}`, {
       name: accountName,
       accountNumber,
       balance,

@@ -1,20 +1,10 @@
+import { Account } from "@/components/features/account/account";
+import { AccountBalance } from "@/components/features/account/account-balance";
 
-
-import { AccountBalance } from "@/components/account-balance";
-import { AccountForm } from "@/components/account-form";
-import { Deposit } from "@/components/deposit";
+import { Transactions } from "@/components/features/transactions/transactions";
 import { MainNav } from "@/components/main-nav";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Withdraw } from "@/components/withdraw";
-
-
+import { Card, CardContent } from "@/components/ui/card";
 
 import { Metadata } from "next";
 
@@ -43,20 +33,15 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12 p-5" >
-        <Card className="col-span-12">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12 p-5">
+        <Card className="col-span-6">
           <CardContent>
-            <AccountForm />
+            <Account />
           </CardContent>
         </Card>
         <Card className="col-span-6">
           <CardContent>
-            <Deposit />
-          </CardContent>
-        </Card>
-        <Card className="col-span-6">
-          <CardContent>
-            <Withdraw />
+            <Transactions />
           </CardContent>
         </Card>
       </div>
