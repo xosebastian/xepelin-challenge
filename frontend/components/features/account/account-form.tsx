@@ -67,7 +67,11 @@ export function AccountForm({ onSubmit, onChange }: Props) {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter your account name" {...field} />
+                <Input
+                  data-testid="accountName"
+                  placeholder="Enter your account name"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -81,6 +85,7 @@ export function AccountForm({ onSubmit, onChange }: Props) {
               <FormLabel>Number</FormLabel>
               <FormControl>
                 <Input
+                  data-testid="accountNumber"
                   maxLength={10}
                   placeholder="Enter your account number"
                   {...field}
@@ -97,13 +102,13 @@ export function AccountForm({ onSubmit, onChange }: Props) {
             <FormItem>
               <FormLabel>Balance</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input data-testid="balance" type="number" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button role="button" type="submit">
+        <Button role="button" data-testid="create" type="submit">
           Create
         </Button>
       </form>
