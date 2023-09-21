@@ -3,13 +3,11 @@ import { Provider } from "react-redux";
 
 import { store } from "@/redux/store";
 import { Deposit } from "../deposit";
-import { create } from "@/redux/features/account-slice";
+import { create, clear } from "@/redux/features/account-slice";
 
 describe("Deposit", () => {
   beforeEach(() => {
-    store.dispatch({
-      type: "account/reset",
-    });
+    store.dispatch(clear());
   });
 
   it("should render a message when accountId is not defined", () => {
